@@ -94,6 +94,10 @@ export default {
     type: [Number, String],
     default: 0,
   },
+  autoCompress: {
+    type: Boolean,
+    default: true
+  },
   credentials: {
     type: [String, Boolean],
     default: true,
