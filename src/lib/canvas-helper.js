@@ -25,7 +25,7 @@ export default {
       image.src = event.target.result;
       image.onload = function () {
         const imageH = image.height;
-        const imaggW = image.width;
+        const imageW = image.width;
         let picH, picW;
         if (imageH > maxL || imageW > maxL) {
           const radio = imageH / imageW;
