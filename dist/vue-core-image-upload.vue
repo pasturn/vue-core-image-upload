@@ -112,73 +112,13 @@
           return;
         }
         this. __dispatch('imagechanged', this.files.length > 1 ? this.files : this.files[0]);
-        if (this.compress && this.files[0]['type'] !== 'image/png' && this.files[0]['type'] !== 'image/gif') {
-          canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
+        if (this.autoCompress && this.files[0]['type'] !== 'image/gif') {
+          canvasHelper.compress(this.files[0], (code) => {
             this.tryAjaxUpload('', true, code);
           });
-        } else if (this.autoCompress && this.files[0].size > 1024000) {
-          var reader = new FileReader()
-          var filename = this.files[0].name,
-              type = this.files[0].type,
-              size = this.files[0].size,
-              maxL = 1240,
-              that = this;
-          reader.onload = function () {
-              var data = reader.result
-              canvasHelper._loadImage(data, function(img) {
-                var imageH = img.height,
-                    imageW = img.width;
-                var picH, picW;
-                if (imageH > maxL || imageW > maxL) {
-                  var radio = imageH / imageW;
-                  if (imageH >= imageW) {
-                    picH = maxL
-                    picW = Math.round(maxL / radio )
-                  } else {
-                    picW = maxL
-                    picH = Math.round(maxL * radio)
-                  }
-                  var file;
-                  var dataURL;
-                  var r = 1;
-                  while (size > 1024000) {
-                    that.__compressSize(img, {
-                      height: picH * r,
-                      width: picW * r
-                    }, function (canvas) {
-                      file = that.__converCanvasToFile(canvas, filename, type)
-                      size = file.size
-                      r -= 0.1
-                      dataURL = canvas.toDataURL()
-                    })
-                  }
-                  that.tryAjaxUpload('', true, dataURL)
-                }    
-              })
-          }
-          reader.readAsDataURL(this.files[0])
         } else {
           this.tryAjaxUpload();
         }
-      },
-      __compressSize(img, option, callback) {
-        var canvas = document.createElement('canvas');
-        var context = canvas.getContext('2d');
-        canvas.height = option.height;
-        canvas.width = option.width;
-        context.drawImage(img, 0, 0, option.width, option.height);
-        callback(canvas)
-      },
-      __converCanvasToFile(canvas, filename, type) {
-        var format = type || 'image/jpeg';
-        var base64 = canvas.toDataURL(format, 1)
-        var code = window.atob(base64.split(',')[1]);
-        var aBuffer = new ArrayBuffer(code.length);
-        var uBUffer = new Uint8Array(aBuffer);
-        for(var i = 0; i < code.length; i++) {
-          uBUffer[i] = code.charCodeAt[i]
-        }
-        return new File([uBUffer], filename, {type: format})
       },
       __showImage() {
         this.hasImage = true;

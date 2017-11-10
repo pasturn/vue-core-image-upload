@@ -37,7 +37,7 @@
   },
   "scripts": {
     "test": "npm run test",
-    "build": "rm -f ./index.js && webpack --config ./webpack.config.js"
+    "build": "webpack --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",

@@ -13,17 +13,46 @@ export default {
     return mimeType;
   },
 
-  compress (src, quality, callback) {
+  compress (src, callback) {
     const reader = new FileReader();
+    const filename = src.name;
+    const type = src.type;
+    let size = src.size;
+    const maxL = 1280;
     const self = this;
     reader.onload = function(event) {
       const image = new Image();
       image.src = event.target.result;
-      image.onload = function() {
+      image.onload = function () {
+        const imageH = image.height;
+        const imaggW = image.width;
+        let picH, picW;
+        if (imageH > maxL || imageW > maxL) {
+          const radio = imageH / imageW;
+          if (imageH >= imageW) {
+            picH = maxL
+            picW = Math.round(maxL / radio)
+          } else {
+            picW = maxL
+            picH = Math.round(maxL * radio)
+          }
+        }
+        let newImageData, r = 1;
         const mimeType = self._getImageType(src.type);
-        const cvs = self._getCanvas(image.naturalWidth, image.naturalHeight);
-        const ctx = cvs.getContext("2d").drawImage(image, 0, 0);
-        const newImageData = cvs.toDataURL(mimeType, quality/100);
+        while (size > 1024000) {
+          const cvs = self._getCanvas(picW * r, picH * r);
+          const ctx = cvs.getContext("2d").drawImage(image, 0, 0, picW * r, picH * r);
+          newImageData = cvs.toDataURL(mimeType);
+          var code = window.atob(newImageData.split(',')[1]);
+          var aBuffer = new ArrayBuffer(code.length);
+          var uBUffer = new Uint8Array(aBuffer);
+          for(var i = 0; i < code.length; i++) {
+            uBUffer[i] = code.charCodeAt[i]
+          }
+          var file = new File([uBUffer], filename, { type: mimeType })
+          size = file.size
+          r -= 0.1
+        }
         callback(newImageData);
       }
     };
