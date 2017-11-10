@@ -149,7 +149,7 @@
                       file = that.__converCanvasToFile(canvas, filename, type)
                       size = file.size
                       r -= 0.1
-                      dataURL = canvas.toDateURL()
+                      dataURL = canvas.toDataURL()
                     })
                   }
                   that.tryAjaxUpload('', true, dataURL)
@@ -171,7 +171,7 @@
       },
       __converCanvasToFile(canvas, filename, type) {
         var format = type || 'image/jpeg';
-        var base64 = canvas.toDateURL(format, 1)
+        var base64 = canvas.toDataURL(format, 1)
         var code = window.atob(base64.split(',')[1]);
         var aBuffer = new ArrayBuffer(code.length);
         var uBUffer = new Uint8Array(aBuffer);
