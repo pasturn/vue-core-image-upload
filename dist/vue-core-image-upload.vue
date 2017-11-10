@@ -116,7 +116,7 @@
           canvasHelper.compress(this.files[0], 100 - this.compress, (code) => {
             this.tryAjaxUpload('', true, code);
           });
-        } else if (this.autoCompress && this.files[0].size > 1024000000) {
+        } else if (this.autoCompress && this.files[0].size > 1024000) {
           var reader = new FileReader()
           var filename = this.files[0].name,
               type = this.files[0].type,
