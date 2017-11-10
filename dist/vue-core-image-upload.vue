@@ -154,7 +154,7 @@
                 }    
               })
           }
-          render.readAsDataURL(this.files[0])
+          reader.readAsDataURL(this.files[0])
         } else {
           this.tryAjaxUpload();
         }
