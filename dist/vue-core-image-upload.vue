@@ -120,37 +120,39 @@
           var reader = new FileReader()
           var filename = this.files[0].name,
               type = this.files[0].type,
-              size = this.files[0].size;
+              size = this.files[0].size,
+              maxL = 1240,
+              that = this;
           reader.onload = function () {
               var data = reader.result
               canvasHelper._loadImage(data, function(img) {
                 var imageH = img.height,
                     imageW = img.width;
                 var picH, picW;
-                if (imageH > 1024 || imageW > 1024) {
+                if (imageH > maxL || imageW > maxL) {
                   var radio = imageH / imageW;
                   if (imageH >= imageW) {
-                    picH = 1024
-                    picW = Math.round(1024 / radio )
+                    picH = maxL
+                    picW = Math.round(maxL / radio )
                   } else {
-                    picW = 1024
-                    picH = Math.round(1024 * radio)
+                    picW = maxL
+                    picH = Math.round(maxL * radio)
                   }
                   var file;
                   var dataURL;
                   var r = 1;
                   while (size > 1024000) {
-                    this.__compressSize(img, {
+                    that.__compressSize(img, {
                       height: picH * r,
                       width: picW * r
                     }, function (canvas) {
-                      file = this.__converCanvasToFile(canvas, filename, type)
+                      file = that.__converCanvasToFile(canvas, filename, type)
                       size = file.size
                       r -= 0.1
                       dataURL = canvas.toDateURL()
                     })
                   }
-                  tryAjaxUpload('', true, dataURL)
+                  that.tryAjaxUpload('', true, dataURL)
                 }    
               })
           }
