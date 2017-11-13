@@ -20,7 +20,6 @@ export default {
     let size = src.size;
     const maxL = 1280;
     const self = this;
-    console.log(src)
     reader.onload = function(event) {
       const image = new Image();
       image.src = event.target.result;

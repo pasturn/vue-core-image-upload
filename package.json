@@ -1,6 +1,6 @@
 {
   "name": "vue-core-image-upload",
-  "version": "2.3.17",
+  "version": "2.3.18",
   "description": "a vue plgin for image upload and crop",
   "main": "dist/vue-core-image-upload.vue",
   "dependencies": {
