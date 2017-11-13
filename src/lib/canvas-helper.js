@@ -41,7 +41,6 @@ export default {
           picH = imageH
           picW = imageW
         }
-        console.log(picH, picW)
         let newImageData, r = 1;
         const mimeType = self._getImageType(src.type);
         do{
@@ -55,11 +54,9 @@ export default {
             uBUffer[i] = code.charCodeAt[i]
           }
           var file = new File([uBUffer], filename, { type: mimeType })
-          console.log(file)
           size = file.size
           r -= 0.1
         } while (size > 1024000)
-        console.log(newImageData)
         callback(newImageData);
       }
     };
