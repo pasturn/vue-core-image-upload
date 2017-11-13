@@ -36,6 +36,9 @@ export default {
             picW = maxL
             picH = Math.round(maxL * radio)
           }
+        } else {
+          picH = imageH
+          picW = imageW
         }
         let newImageData, r = 1;
         const mimeType = self._getImageType(src.type);
