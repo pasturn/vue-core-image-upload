@@ -39,7 +39,7 @@ export default {
         }
         let newImageData, r = 1;
         const mimeType = self._getImageType(src.type);
-        while (size > 1024000) {
+        do{
           const cvs = self._getCanvas(picW * r, picH * r);
           const ctx = cvs.getContext("2d").drawImage(image, 0, 0, picW * r, picH * r);
           newImageData = cvs.toDataURL(mimeType);
@@ -52,7 +52,7 @@ export default {
           var file = new File([uBUffer], filename, { type: mimeType })
           size = file.size
           r -= 0.1
-        }
+        } while (size > 1024000)
         callback(newImageData);
       }
     };
