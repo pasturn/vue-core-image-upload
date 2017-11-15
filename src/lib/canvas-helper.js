@@ -50,7 +50,7 @@ export default {
           var aBuffer = new ArrayBuffer(code.length);
           var uBuffer = new Uint8Array(aBuffer);
           for(var i = 0; i < code.length; i++) {
-            uBUffer[i] = code.charCodeAt[i]
+            uBuffer[i] = code.charCodeAt[i]
           }
           var file = new Blob([uBuffer], { type: mimeType })
           size = file.size
