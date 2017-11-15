@@ -48,11 +48,11 @@ export default {
           newImageData = cvs.toDataURL(mimeType);
           var code = window.atob(newImageData.split(',')[1]);
           var aBuffer = new ArrayBuffer(code.length);
-          var uBUffer = new Uint8Array(aBuffer);
+          var uBuffer = new Uint8Array(aBuffer);
           for(var i = 0; i < code.length; i++) {
             uBUffer[i] = code.charCodeAt[i]
           }
-          var file = new File([uBUffer], filename, { type: mimeType })
+          var file = new Blob([uBuffer], { type: mimeType })
           size = file.size
           r -= 0.1
         } while (size > 1024000)
